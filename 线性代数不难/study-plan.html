@@ -1,0 +1,364 @@
+<title>18.06 × 线性代数不难 · 配套阅读清单</title>
+<style>
+  :root{
+    --ground:#EDF1F1; --surface:#FFFFFF; --surface-2:#F4F7F7;
+    --ink:#132026; --muted:#5B6B72; --faint:#8A99A0;
+    --line:#D8E0E1; --line-2:#E7ECEC;
+    --accent:#0E7490; --accent-soft:#0E749018; --accent-ink:#0B5566;
+    --danger:#C2372B; --danger-soft:#C2372B14;
+    --grid:#0e749010;
+    --shadow:0 1px 2px #13202609, 0 8px 24px -12px #13202618;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#0D1417; --surface:#131E22; --surface-2:#0F181B;
+      --ink:#E6EDEE; --muted:#93A5AB; --faint:#6A7C82;
+      --line:#233238; --line-2:#1B282D;
+      --accent:#2DBBD4; --accent-soft:#2DBBD41f; --accent-ink:#8fe3f2;
+      --danger:#F1877C; --danger-soft:#F1877c18;
+      --grid:#2dbbd40e;
+      --shadow:0 1px 2px #00000030, 0 10px 30px -14px #00000060;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#EDF1F1; --surface:#FFFFFF; --surface-2:#F4F7F7;
+    --ink:#132026; --muted:#5B6B72; --faint:#8A99A0;
+    --line:#D8E0E1; --line-2:#E7ECEC;
+    --accent:#0E7490; --accent-soft:#0E749018; --accent-ink:#0B5566;
+    --danger:#C2372B; --danger-soft:#C2372B14; --grid:#0e749010;
+    --shadow:0 1px 2px #13202609, 0 8px 24px -12px #13202618;
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1417; --surface:#131E22; --surface-2:#0F181B;
+    --ink:#E6EDEE; --muted:#93A5AB; --faint:#6A7C82;
+    --line:#233238; --line-2:#1B282D;
+    --accent:#2DBBD4; --accent-soft:#2DBBD41f; --accent-ink:#8fe3f2;
+    --danger:#F1877C; --danger-soft:#F1877c18; --grid:#2dbbd40e;
+    --shadow:0 1px 2px #00000030, 0 10px 30px -14px #00000060;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background:var(--ground);
+    font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    line-height:1.6; font-size:16px;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .serif{font-family:"Songti SC","Source Han Serif SC","Noto Serif SC","Times New Roman",Georgia,serif;}
+  .mono{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;}
+
+  .wrap{max-width:920px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(16px,4vw,32px) 80px;}
+
+  /* ---------- hero ---------- */
+  header{margin-bottom:34px;}
+  .eyebrow{
+    font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-ink);
+    font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);display:inline-block;}
+  h1{
+    font-size:clamp(28px,5.4vw,42px);line-height:1.12;margin:0 0 12px;font-weight:650;
+    letter-spacing:-.01em;text-wrap:balance;
+  }
+  h1 .x{color:var(--accent);font-style:italic;padding:0 .12em;}
+  .lede{color:var(--muted);max-width:60ch;margin:0 0 26px;font-size:16.5px;}
+  .lede b{color:var(--ink);font-weight:600;}
+
+  /* ---------- progress ---------- */
+  .meter{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .meter-top .n{font-size:15px;color:var(--muted);}
+  .meter-top .n b{color:var(--ink);font-weight:600;}
+  .pct{font-size:30px;font-weight:660;letter-spacing:-.02em;}
+  .pct span{font-size:16px;color:var(--faint);font-weight:500;}
+  .bar{height:9px;border-radius:99px;background:var(--line-2);overflow:hidden;}
+  .bar>i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-ink));
+    transition:width .5s cubic-bezier(.4,0,.2,1);}
+  @media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+  .reset{
+    background:none;border:0;color:var(--faint);font:inherit;font-size:12.5px;cursor:pointer;
+    padding:0;text-decoration:underline;text-underline-offset:2px;align-self:flex-start;
+  }
+  .reset:hover{color:var(--accent);}
+
+  /* ---------- legend ---------- */
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:22px 2px 0;font-size:13px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:9px;height:9px;border-radius:3px;display:inline-block;}
+
+  /* ---------- phases ---------- */
+  .phase{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    margin-top:22px;box-shadow:var(--shadow);overflow:hidden;
+  }
+  .phase.peak{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));}
+  .ph-head{
+    display:flex;align-items:flex-start;gap:14px;padding:18px 22px;
+    border-bottom:1px solid var(--line-2);position:relative;
+  }
+  .phase.peak .ph-head::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);
+  }
+  .ph-tag{
+    font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent-ink);
+    background:var(--accent-soft);border-radius:7px;padding:5px 9px;white-space:nowrap;margin-top:2px;
+  }
+  .ph-title{margin:0;font-size:19px;font-weight:640;letter-spacing:-.01em;}
+  .ph-sub{margin:3px 0 0;color:var(--muted);font-size:13.5px;}
+  .peak-badge{
+    margin-left:auto;font-size:11.5px;font-weight:600;color:var(--accent-ink);
+    border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:99px;
+    padding:3px 10px;white-space:nowrap;margin-top:2px;
+  }
+
+  ul.rows{list-style:none;margin:0;padding:6px;}
+  li.row{
+    display:grid;grid-template-columns:26px 62px 1fr auto;gap:6px 14px;align-items:start;
+    padding:13px 14px;border-radius:11px;position:relative;
+  }
+  li.row + li.row{border-top:1px solid var(--line-2);}
+  li.row:hover{background:var(--surface-2);}
+  li.row.done .r-title,li.row.done .r-map,li.row.done .r-note{opacity:.42;}
+  li.row.done .r-title{text-decoration:line-through;text-decoration-color:var(--faint);}
+
+  /* checkbox */
+  .cbx{position:relative;margin-top:3px;}
+  .cbx input{position:absolute;opacity:0;width:20px;height:20px;margin:0;cursor:pointer;}
+  .cbx label{
+    display:block;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);
+    background:var(--surface);transition:all .15s;cursor:pointer;
+  }
+  .cbx input:hover + label{border-color:var(--accent);}
+  .cbx input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px;}
+  .cbx input:checked + label{background:var(--accent);border-color:var(--accent);}
+  .cbx input:checked + label::after{
+    content:"";position:absolute;left:6.5px;top:3px;width:5px;height:10px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);
+  }
+  @media (prefers-color-scheme:dark){.cbx input:checked + label::after{border-color:#0D1417;}}
+  :root[data-theme="dark"] .cbx input:checked + label::after{border-color:#0D1417;}
+
+  .r-code{font-size:14px;font-weight:600;color:var(--ink);padding-top:2px;letter-spacing:.01em;}
+  .r-code.gap{color:var(--faint);}
+  .r-main{grid-column:3;}
+  .r-title{font-size:15px;font-weight:560;line-height:1.4;}
+  .r-map{font-size:13px;color:var(--muted);margin-top:3px;}
+  .r-map b{color:var(--accent-ink);font-weight:600;}
+  .r-note{font-size:12.5px;color:var(--faint);margin-top:4px;line-height:1.5;}
+
+  .help{grid-column:4;grid-row:1;justify-self:end;padding-top:1px;white-space:nowrap;}
+  .stars{font-size:13px;letter-spacing:1px;font-weight:600;}
+  .s3{color:var(--accent);}
+  .s2{color:color-mix(in srgb,var(--accent) 55%,var(--faint));}
+  .gap-pill{
+    font-size:11px;font-weight:600;color:var(--danger);background:var(--danger-soft);
+    border-radius:6px;padding:3px 8px;
+  }
+  .hl{
+    display:block;font-size:10.5px;color:var(--faint);text-align:right;margin-top:3px;
+    font-weight:500;max-width:15ch;white-space:normal;
+  }
+
+  .aside{
+    margin:12px 14px 4px;padding:11px 14px;border-left:3px solid var(--accent);
+    background:var(--accent-soft);border-radius:0 9px 9px 0;font-size:13px;color:var(--muted);
+  }
+  .aside b{color:var(--ink);}
+
+  /* ---------- principles + footer ---------- */
+  .rules{margin-top:36px;padding:22px 24px;border:1px dashed var(--line);border-radius:16px;background:var(--surface-2);}
+  .rules h2{font-size:16px;margin:0 0 14px;font-weight:640;}
+  .rules ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:14px;color:var(--muted);}
+  .rules ol b{color:var(--ink);font-weight:600;}
+  .rules code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--accent-soft);color:var(--accent-ink);padding:1px 6px;border-radius:5px;}
+
+  footer{margin-top:34px;text-align:center;color:var(--faint);font-size:12.5px;line-height:1.7;}
+  footer a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent);}
+  footer a:hover{color:var(--accent);}
+
+  @media (max-width:560px){
+    li.row{grid-template-columns:24px 1fr;gap:4px 12px;}
+    .r-code{grid-column:2;grid-row:1;}
+    .r-main{grid-column:2;grid-row:2;}
+    .help{grid-column:2;grid-row:3;justify-self:start;padding-top:6px;}
+    .hl{text-align:left;}
+    .ph-head{flex-wrap:wrap;}
+    .peak-badge{margin-left:0;}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MIT 18.06 · 几何直觉陪读</div>
+    <h1 class="serif">Strang 线性代数 <span class="x">×</span> 《线性代数不难》下册</h1>
+    <p class="lede">主线永远是 <b>18.06</b>;下册当"几何 + Python 陪读"。每看完一讲,勾掉它,翻到对应章 <b>看图 · 跑代码 · 手算一遍</b>。进度自动保存在本机。</p>
+
+    <div class="meter">
+      <div class="meter-top">
+        <div class="pct" id="pct">0<span> %</span></div>
+        <div class="n">已完成 <b id="done">0</b> / <b id="total">0</b> 讲 · 覆盖 33 讲主线</div>
+      </div>
+      <div class="bar"><i id="fill"></i></div>
+      <button class="reset" id="reset">重置进度</button>
+    </div>
+
+    <div class="legend">
+      <span><i class="dot" style="background:var(--accent)"></i> ★★★ 几何直觉帮助强</span>
+      <span><i class="dot" style="background:color-mix(in srgb,var(--accent) 55%,var(--faint))"></i> ★★ 中等</span>
+      <span><i class="dot" style="background:var(--danger)"></i> 下册无对应 · 靠 Strang</span>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <section class="rules">
+    <h2 class="serif">三条使用原则</h2>
+    <ol>
+      <li><b>主线永远是 Strang。</b>下册是几何与代码的陪读,不替代;每讲之后翻对应章看图、跑代码、手算。</li>
+      <li><b>三个缺口别找了</b>——<code>L23 微分方程</code>、<code>L26 复数/FFT</code>、<code>L28 Jordan 形</code> 下册没有,专心听 Strang。</li>
+      <li><b>可以领先半步</b>:学到投影时提前看 Ch10 回归,等 Strang 到 L16 最小二乘,你已有画面。</li>
+    </ol>
+  </section>
+
+  <footer>
+    根据《线性代数不难》下册目录与 MIT 18.06 大纲整理 · 书籍来源
+    <a href="https://github.com/Visualize-ML/Linear-Algebra-Made-Easy---Learn-with-Python-and-Visualization" target="_blank" rel="noopener">Visualize-ML</a><br>
+    清单同步保存于仓库 <span class="mono">线性代数不难/18.06_配套阅读清单.md</span>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  { tag:"阶段 0", title:"已学完 · 回填索引", sub:"L1–10 → 上册,按需回填", peak:false, defaultDone:true, items:[
+    { code:"L1–3", title:"消元 · 逆 · 矩阵乘法", map:"上 Ch2–3、Ch5", note:"复习矩阵乘法四视角", help:2 },
+    { code:"L4",   title:"LU 分解", map:"上 Ch7 初等行变换", note:"LU 的几何 = 剪切,先记着,Ch13 呼应", help:2 },
+    { code:"L5–10",title:"四个基本子空间 · 秩", map:"上 Ch6 向量空间、Ch7", note:"Strang 讲得更系统,以他为准", help:2 },
+  ]},
+  { tag:"阶段 A", title:"正交与投影", sub:"L11–17 · 下册第一个高峰", peak:true, items:[
+    { code:"L11", title:"矩阵空间 · 秩1 · 小世界图", map:"下 Ch8.5 + Ch15.1", note:"秩1 = 一个列 × 一个行的外积画面", help:2 },
+    { code:"L12", title:"图 · 网络 · 关联矩阵", map:"下 Ch15 无向/有向图", note:"把图矩阵化,关联矩阵零空间 = 回路", help:3 },
+    { code:"L14", title:"正交向量与子空间", map:"下 Ch8.5 + Ch9.3", note:"正交 = 内积为 0,格拉姆矩阵登场", help:3 },
+    { code:"L15", title:"投影到子空间", map:"下 Ch8.5 正交投影", note:"把点垂直拍影子;幂等 P²=P", help:3 },
+    { code:"L16", title:"投影矩阵与最小二乘", map:"下 Ch10 回归", note:"最小二乘 = 把 b 投影到列空间;先几何后法方程", help:3, star:"全书最漂亮一章" },
+    { code:"L17", title:"正交矩阵与 Gram-Schmidt / QR", map:"下 Ch9 正交矩阵 + QR", note:"镜像 = 豪斯霍尔德,直接派上用场", help:3 },
+  ]},
+  { tag:"阶段 B", title:"行列式", sub:"L18–20 · 回上册", peak:false, items:[
+    { code:"L18–20", title:"行列式性质 · 余子式 · 克拉默 · 体积", map:"上 Ch4 行列式", note:"面积/体积倍数是 Ch8 已建立的直觉;克拉默法则靠 Strang", help:2 },
+  ]},
+  { tag:"阶段 C", title:"特征值", sub:"L21–24 · 下册第二个高峰", peak:true, items:[
+    { code:"L21", title:"特征值与特征向量", map:"下 Ch11.1 特征值分解", note:"特征向量 = 固有方向,特征值 = 伸缩比", help:3 },
+    { code:"L22", title:"对角化与 Aᵏ", map:"下 Ch11.1–11.3", note:"A = XΛX⁻¹;非对称阵 EVD 的几何", help:3 },
+    { code:"L23", title:"微分方程 e^(At)", map:"—— 下册无对应", note:"专心听 Strang", help:0 },
+    { code:"L24", title:"马尔可夫矩阵 · 傅里叶级数", map:"下 Ch15.3 转移矩阵", note:"最大特征值 = 1、稳态分布(傅里叶部分无)", help:2 },
+  ]},
+  { tag:"阶段 D", title:"对称 · 正定 · SVD", sub:"L25–29 · 下册第三个高峰", peak:true, items:[
+    { code:"L25", title:"对称矩阵与正定性", map:"下 Ch11.2 谱分解 + Ch13.1", note:"实对称 → 谱分解,正交特征向量", help:3 },
+    { code:"L26", title:"复矩阵 · FFT", map:"—— 下册无对应", note:"专心听 Strang", help:0 },
+    { code:"L27", title:"正定矩阵与极小值", map:"下 Ch13 二次型 + 瑞利商", note:"xᵀAx 画成椭圆等高线,正定 = 碗朝上", help:3, aside:"顺带看 Ch13.2 Cholesky/LDL,把 L4 的 LU 从几何(缩放+剪切)讲通。" },
+    { code:"L28", title:"相似矩阵 · Jordan 形", map:"—— 下册无对应", note:"专心听 Strang", help:0 },
+    { code:"L29", title:"奇异值分解 SVD", map:"下 Ch14 奇异值分解(全章)", note:"A = UΣVᵀ = 旋转→缩放→旋转,椭圆视角", help:3, star:"几何比 Strang 更细" },
+  ]},
+  { tag:"阶段 E", title:"线性变换与收尾", sub:"L30–33", peak:false, items:[
+    { code:"L30", title:"线性变换与其矩阵", map:"下 Ch8 几何变换", note:"变换矩阵的列 = 基向量的落点", help:3 },
+    { code:"L31", title:"基变换 · 图像压缩", map:"下 Ch12 PCA + Ch14.4 截断SVD", note:"图像压缩 = 截断 SVD;PCA = 找最佳基", help:3 },
+    { code:"L32/33", title:"左右逆 · 伪逆", map:"下 Ch14 SVD", note:"伪逆 = 用 SVD 能逆的部分逆回去", help:2 },
+  ]},
+];
+
+const KEY = "study1806-linearalgebra-v1";
+let state = {};
+try{ state = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ state = {}; }
+
+const app = document.getElementById("app");
+let first = Object.keys(state).length === 0;
+
+DATA.forEach((ph, pi)=>{
+  const sec = document.createElement("section");
+  sec.className = "phase" + (ph.peak ? " peak" : "");
+  const head = document.createElement("div");
+  head.className = "ph-head";
+  head.innerHTML = `<span class="ph-tag">${ph.tag}</span>
+    <div><h3 class="ph-title serif">${ph.title}</h3><p class="ph-sub">${ph.sub}</p></div>
+    ${ph.peak ? '<span class="peak-badge">▲ 高峰</span>' : ''}`;
+  sec.appendChild(head);
+
+  const ul = document.createElement("ul");
+  ul.className = "rows";
+  ph.items.forEach((it, ii)=>{
+    const id = "c_"+pi+"_"+ii;
+    if(first && ph.defaultDone) state[id] = true;
+    const done = !!state[id];
+    const gap = it.help === 0;
+
+    let helpHtml;
+    if(gap){ helpHtml = '<span class="gap-pill">靠 Strang</span>'; }
+    else {
+      const cls = it.help === 3 ? "s3" : "s2";
+      const stars = it.help === 3 ? "★★★" : "★★";
+      helpHtml = `<span class="stars ${cls}">${stars}</span>` + (it.star ? `<span class="hl">${it.star}</span>` : "");
+    }
+
+    const li = document.createElement("li");
+    li.className = "row" + (done ? " done" : "");
+    li.innerHTML = `
+      <span class="cbx"><input type="checkbox" id="${id}" ${done?"checked":""} aria-label="${it.code} ${it.title}"><label for="${id}"></label></span>
+      <span class="r-code mono ${gap?'gap':''}">${it.code}</span>
+      <span class="r-main">
+        <span class="r-title">${it.title}</span>
+        <span class="r-map"><b>${it.map}</b></span>
+        <span class="r-note">${it.note}</span>
+      </span>
+      <span class="help">${helpHtml}</span>`;
+    ul.appendChild(li);
+
+    if(it.aside){
+      const a = document.createElement("div");
+      a.className = "aside";
+      a.innerHTML = `<b>附赠 · </b>${it.aside}`;
+      ul.appendChild(a);
+    }
+
+    li.querySelector("input").addEventListener("change", e=>{
+      state[id] = e.target.checked;
+      li.classList.toggle("done", e.target.checked);
+      save(); refresh();
+    });
+  });
+  sec.appendChild(ul);
+  app.appendChild(sec);
+});
+
+if(first) save();
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+function refresh(){
+  const boxes = document.querySelectorAll('#app input[type=checkbox]');
+  const total = boxes.length;
+  let done = 0; boxes.forEach(b=>{ if(b.checked) done++; });
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById("done").textContent = done;
+  document.getElementById("total").textContent = total;
+  document.getElementById("pct").innerHTML = pct + '<span> %</span>';
+  document.getElementById("fill").style.width = pct + "%";
+}
+
+document.getElementById("reset").addEventListener("click", ()=>{
+  state = {}; save();
+  document.querySelectorAll('#app input[type=checkbox]').forEach(b=>{
+    b.checked = false; b.closest(".row").classList.remove("done");
+  });
+  refresh();
+});
+
+refresh();
+</script>
