@@ -22,6 +22,7 @@
 | Peter Steinberger | 极简派 | https://steipete.me/ ；X: @steipete | "Just Talk To It" 路线；他删掉了什么 |
 | Jesse Vincent（obra） | 重工程派 | https://blog.fsck.com/ ；https://github.com/obra（Superpowers） | 可组合 skills、强制 TDD、subagent 驱动开发 |
 | Dex Horthy | 方法论 | X: @dexhorthy ；HumanLayer | context engineering → harness engineering 的概念演化 |
+| Addy Osmani | 方法论 | https://addyosmani.com/ ；Elevate newsletter | loop engineering 的结构化论述、AI 工程模式总结（2026-07 周报吸收后加入） |
 | Simon Willison | 一线日志 | https://simonwillison.net/ | 高频、诚实、带失败记录；校准"真实水平"的基准线 |
 | Armin Ronacher | 一线日志 | https://lucumr.pocoo.org/ | 深度工作流实践、对工具边界的批判性观察 |
 
