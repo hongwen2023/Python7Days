@@ -1,0 +1,2 @@
+PyMuPDF>=1.24          # PDF 文字提取
+anthropic>=0.40         # 仅 engine: api 时需要；用 claude-cli 可不装
