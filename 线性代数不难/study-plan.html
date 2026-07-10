@@ -119,6 +119,19 @@
     border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:99px;
     padding:3px 10px;white-space:nowrap;margin-top:2px;
   }
+  /* 选学书目:琥珀色区分,不属于 18.06 主线 */
+  .phase.book{border-color:color-mix(in srgb,#B8791C 34%,var(--line));}
+  .phase.book .ph-head{background:color-mix(in srgb,#B8791C 7%,transparent);}
+  .phase.book .ph-tag{color:#8a5a12;background:#B8791C1e;}
+  @media (prefers-color-scheme:dark){.phase.book .ph-tag{color:#E7B75f;background:#E7B75f1e;}}
+  :root[data-theme="dark"] .phase.book .ph-tag{color:#E7B75f;background:#E7B75f1e;}
+  .phase.book .ph-head::before{background:#C88A28 !important;content:"";position:absolute;left:0;top:0;bottom:0;width:4px;}
+  .book-badge{
+    margin-left:auto;font-size:11.5px;font-weight:600;color:#8a5a12;
+    border:1px solid #B8791C55;border-radius:99px;padding:3px 10px;white-space:nowrap;margin-top:2px;
+  }
+  @media (prefers-color-scheme:dark){.book-badge{color:#E7B75f;border-color:#E7B75f44;}}
+  :root[data-theme="dark"] .book-badge{color:#E7B75f;border-color:#E7B75f44;}
 
   ul.rows{list-style:none;margin:0;padding:6px;}
   li.row{
@@ -272,6 +285,23 @@ const DATA = [
     { code:"L31", title:"基变换 · 图像压缩", map:"下 Ch12 PCA + Ch14.4 截断SVD", note:"图像压缩 = 截断 SVD;PCA = 找最佳基", help:3 },
     { code:"L32/33", title:"左右逆 · 伪逆", map:"下 Ch14 SVD", note:"伪逆 = 用 SVD 能逆的部分逆回去", help:2 },
   ]},
+  { tag:"进阶 · 矩阵力量", title:"加强版线代", sub:"姜伟生《矩阵力量》· 与 18.06 平行深化,不逐讲对应", book:true, items:[
+    { code:"Ch08–10", title:"几何变换 · 正交投影 · 数据投影", map:"深化 L15–16 / 下 Ch8·Ch10", note:"同内容加强版,画面更细", help:3 },
+    { code:"Ch12", title:"Cholesky 分解", map:"深化 L27 正定 / 下 Ch13", note:"把 LU 从几何(缩放+剪切)讲透", help:3 },
+    { code:"Ch13–14", title:"特征值分解 + 深入", map:"深化 L21–22 / 下 Ch11", note:"非对称阵 EVD 的几何", help:3 },
+    { code:"Ch15–16", title:"奇异值分解 + 深入", map:"深化 L29 / 下 Ch14", note:"最推荐:SVD 几何直觉夯到最深", help:3, star:"最推荐深化" },
+    { code:"Ch19–21", title:"直线到超平面 · 圆锥曲线 · 曲面正定性", map:"深化 L25/27 二次型 / 下 Ch13", note:"二次型的几何全景", help:3 },
+    { code:"Ch17–18", title:"多元函数微分 · 拉格朗日乘子法", map:"优化(超出 18.06,通往 ML)", note:"纯应用,线代学完再看", help:2 },
+    { code:"Ch22–25", title:"数据与统计 · 数据空间 · 数据分解 · 应用", map:"通往 PCA、统计", note:"纯应用衔接", help:2 },
+  ]},
+  { tag:"终点 · 机器学习", title:"线代的应用", sub:"姜伟生《机器学习》· 把线代用起来的终点站", book:true, items:[
+    { code:"Ch02–05", title:"回归分析 · 多元/非线性回归 · 正则化", map:"L16 最小二乘 / 下 Ch10 直接续集", note:"你刚学的 Ch10 的应用续集", help:2 },
+    { code:"Ch11–12", title:"支持向量机 · 核技巧", map:"超平面 + 二次型(矩阵力量 Ch19/21)", note:"几何:找最优分隔超平面", help:2 },
+    { code:"Ch14–17", title:"PCA · PCA 进阶 · PCA 与回归", map:"深化 L29/31 / 下 Ch12", note:"降维的线代内核", help:3 },
+    { code:"Ch15/18", title:"截断型 SVD · 核 PCA", map:"L31 图像压缩 / 下 Ch14", note:"SVD 的实战用法", help:3 },
+    { code:"Ch20–24", title:"k 均值 · 高斯混合 · 层次/密度聚类", map:"距离度量 / 下 Ch13", note:"纯应用", help:2 },
+    { code:"Ch25", title:"谱聚类", map:"L12 图 / 下 Ch15 拉普拉斯矩阵", note:"压轴:线代 + 图论的合体", help:3, star:"全书压轴呼应" },
+  ]},
 ];
 
 const KEY = "study1806-linearalgebra-v1";
@@ -283,12 +313,14 @@ let first = Object.keys(state).length === 0;
 
 DATA.forEach((ph, pi)=>{
   const sec = document.createElement("section");
-  sec.className = "phase" + (ph.peak ? " peak" : "");
+  sec.className = "phase" + (ph.peak ? " peak" : "") + (ph.book ? " book" : "");
   const head = document.createElement("div");
   head.className = "ph-head";
+  const badge = ph.book ? '<span class="book-badge">📘 选学</span>'
+              : ph.peak ? '<span class="peak-badge">▲ 高峰</span>' : '';
   head.innerHTML = `<span class="ph-tag">${ph.tag}</span>
     <div><h3 class="ph-title serif">${ph.title}</h3><p class="ph-sub">${ph.sub}</p></div>
-    ${ph.peak ? '<span class="peak-badge">▲ 高峰</span>' : ''}`;
+    ${badge}`;
   sec.appendChild(head);
 
   const ul = document.createElement("ul");
@@ -310,7 +342,7 @@ DATA.forEach((ph, pi)=>{
     const li = document.createElement("li");
     li.className = "row" + (done ? " done" : "");
     li.innerHTML = `
-      <span class="cbx"><input type="checkbox" id="${id}" ${done?"checked":""} aria-label="${it.code} ${it.title}"><label for="${id}"></label></span>
+      <span class="cbx"><input type="checkbox" id="${id}" ${done?"checked":""} ${ph.book?'data-book="1"':''} aria-label="${it.code} ${it.title}"><label for="${id}"></label></span>
       <span class="r-code mono ${gap?'gap':''}">${it.code}</span>
       <span class="r-main">
         <span class="r-title">${it.title}</span>
@@ -342,7 +374,7 @@ if(first) save();
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 
 function refresh(){
-  const boxes = document.querySelectorAll('#app input[type=checkbox]');
+  const boxes = document.querySelectorAll('#app input[type=checkbox]:not([data-book])');
   const total = boxes.length;
   let done = 0; boxes.forEach(b=>{ if(b.checked) done++; });
   const pct = total ? Math.round(done/total*100) : 0;
